@@ -6,4 +6,10 @@ CREATE TABLE IF NOT EXISTS todos (
     isCompleted BOOLEAN NOT NULL,
     targetDate DATE NOT NULL,
     PRIMARY KEY (id)
-)
+);
+
+INSERT INTO todos(userId, description, category, isCompleted, targetDate)
+VALUES ('user1', 'Learn to Dance', 'Hobby', false, '2021-12-31'),
+       ('user1', 'Do Laundry', 'Housework', false, '2021-12-31'),
+       ('user1', 'Buy Groceries', 'Shopping', false, '2021-12-31'),
+       ('user1', 'Complete Assignment', 'Work', false, '2021-12-31');
