@@ -12,14 +12,14 @@ public class TodoRepository {
 
     ArrayList<Todo> todoList = new ArrayList<>();
 
-    @PostConstruct
-    public void init() {
-        todoList.add(new Todo(1, "1", "Buy Groceries", "Shopping", false, LocalDateTime.now().plusDays(3)));
-        todoList.add(new Todo(2, "1", "Do Laundry", "Housework", false, LocalDateTime.now().plusDays(3)));
-        todoList.add(new Todo(3, "1", "Finish Assignment", "School", false, LocalDateTime.now().plusDays(3)));
-        todoList.add(new Todo(4, "1", "Go for a run", "Exercise", false, LocalDateTime.now().plusDays(3)));
-        todoList.add(new Todo(5, "1", "Read a book", "Leisure", false, LocalDateTime.now().plusDays(3)));
-    }
+//    @PostConstruct
+//    public void init() {
+//        todoList.add(new Todo(1, "1", "Buy Groceries", "Shopping", false, LocalDateTime.now().plusDays(3)));
+//        todoList.add(new Todo(2, "1", "Do Laundry", "Housework", false, LocalDateTime.now().plusDays(3)));
+//        todoList.add(new Todo(3, "1", "Finish Assignment", "School", false, LocalDateTime.now().plusDays(3)));
+//        todoList.add(new Todo(4, "1", "Go for a run", "Exercise", false, LocalDateTime.now().plusDays(3)));
+//        todoList.add(new Todo(5, "1", "Read a book", "Leisure", false, LocalDateTime.now().plusDays(3)));
+//    }
 
     ArrayList<Todo> findAll() {
         return todoList;
