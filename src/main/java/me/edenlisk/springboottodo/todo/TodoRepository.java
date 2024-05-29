@@ -27,7 +27,7 @@ public class TodoRepository {
 
     Optional<Todo> getTodoById(Integer id) {
         return todoList.stream()
-                .filter(t -> t.id().equals(id))
+                .filter(t -> t.getId().toString().equals(id.toString()))
                 .findFirst();
     }
 
@@ -41,6 +41,6 @@ public class TodoRepository {
     }
 
     void deleteTodo(Integer id) {
-        todoList.removeIf(t -> t.id().equals(id));
+        todoList.removeIf(t -> t.getId().toString().equals(id.toString()));
     }
 }

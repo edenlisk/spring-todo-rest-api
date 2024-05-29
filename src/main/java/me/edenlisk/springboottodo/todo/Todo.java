@@ -1,57 +1,55 @@
 package me.edenlisk.springboottodo.todo;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
 
-@Entity
+@Document
 public class Todo {
 
     @Id
-    private Integer id;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private ObjectId id;
 
-
-    @Column(name = "user_id")
     @NotEmpty
     private String userId;
     @NotEmpty
+    @Size(min=5, max = 140, message = "Description should be between 5 and 140 characters")
     private String description;
 
     private String category;
 
-    @Column(name = "is_completed")
-    private Boolean isCompleted;
+    private Boolean completed;
 
-    @Column(name = "target_date")
     private LocalDateTime targetDate;
 
-    public Todo() {
-    }
 
-    public Todo(String userId, String description, String category, Boolean isCompleted, LocalDateTime targetDate) {
-        if (!targetDate.isAfter(LocalDateTime.now())) {
-            throw new IllegalArgumentException("Target date cannot be in the past");
-        }
+    public Todo(ObjectId id, String userId, String description, String category, Boolean completed, LocalDateTime targetDate) {
+        this.id = id;
         this.userId = userId;
         this.description = description;
         this.category = category;
-        this.isCompleted = isCompleted;
+        this.completed = completed;
         this.targetDate = targetDate;
     }
 
     // getters and setters
 
-    public Integer id() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
-    public String userId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -59,7 +57,7 @@ public class Todo {
         this.userId = userId;
     }
 
-    public String description() {
+    public String getDescription() {
         return description;
     }
 
@@ -67,7 +65,7 @@ public class Todo {
         this.description = description;
     }
 
-    public String category() {
+    public String getCategory() {
         return category;
     }
 
@@ -75,15 +73,15 @@ public class Todo {
         this.category = category;
     }
 
-    public Boolean isCompleted() {
-        return isCompleted;
+    public Boolean getCompleted() {
+        return completed;
     }
 
     public void setCompleted(Boolean completed) {
-        isCompleted = completed;
+        this.completed = completed;
     }
 
-    public LocalDateTime targetDate() {
+    public LocalDateTime getTargetDate() {
         return targetDate;
     }
 
@@ -98,8 +96,9 @@ public class Todo {
                 ", userId='" + userId + '\'' +
                 ", description='" + description + '\'' +
                 ", category='" + category + '\'' +
-                ", isCompleted=" + isCompleted +
+                ", isCompleted=" + completed +
                 ", targetDate=" + targetDate +
                 '}';
     }
+
 }
