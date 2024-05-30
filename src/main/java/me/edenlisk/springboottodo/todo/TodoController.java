@@ -4,10 +4,7 @@ import jakarta.validation.Valid;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.mongodb.repository.Update;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +22,6 @@ public class TodoController {
 
     @GetMapping("")
     List<Todo> getTodos() {
-        log.info("Getting all todos" + todoRepository.findAll());
         return todoRepository.findAll();
     }
 
@@ -40,21 +36,33 @@ public class TodoController {
 
     @PostMapping("")
     Todo createTodo(@Valid @RequestBody Todo todo) {
-        Todo createdTodo = todoRepository.save(todo);
-        return createdTodo;
+        return todoRepository.save(todo);
     }
 
     @PatchMapping("/{id}")
     Todo updateTodo(@PathVariable ObjectId id, @RequestBody Todo todo) {
         Optional<Todo> existingTodo = todoRepository.findById(id);
         existingTodo.ifPresent(t -> {
-            t.setCategory(todo.getCategory());
-            t.setDescription(todo.getDescription());
-            t.setTargetDate(todo.getTargetDate());
-            t.setCompleted(todo.getCompleted());
+            if (t.getCategory() != null) {
+                t.setCategory(todo.getCategory());
+            }
+            if (todo.getDescription() != null) {
+                t.setDescription(todo.getDescription());
+            }
+            if (todo.getTargetDate() != null) {
+                t.setTargetDate(todo.getTargetDate());
+            }
+            if (todo.getCompleted() != null) {
+                t.setCompleted(todo.getCompleted());
+            }
             todoRepository.save(t);
         });
         return existingTodo.orElse(null);
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteTodo(@PathVariable ObjectId id) {
+        todoRepository.deleteById(id);
     }
 
 }
